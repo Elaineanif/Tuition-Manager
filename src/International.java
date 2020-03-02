@@ -22,12 +22,8 @@ public class International extends Student {
     	int partTimeFee = 846;
     	int fullTimeFee = 1441;
     	int maxCredits = 15;
-    	int leastCredits = 9;
     	int tuition = 0;
     	int ccredit = 0;
-    	if (credit < leastCredits) {
-    		return null;
-    	}
     	if (credit > maxCredits) {
     		ccredit = maxCredits;
     	}
@@ -50,7 +46,12 @@ public class International extends Student {
     	return tuition;
     }
     pubilc String toString() {
-    	return super.toString()+"tuition due:$"+tuitionDue();
+    	if (exchange) {
+    		return super.toString()+" is an exchange student.";
+    	}
+    	else{
+    		return super.toString()+" is not an exchange student.";
+    	}
     }
     
     public static void main(String[] args) {

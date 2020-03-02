@@ -10,43 +10,64 @@ public class TuitionManager {
 	/**
 	 * To read the command from the file.
 	 */
-	Scanner scanner = new Scanner(System.in);
-	String commandline = scanner.nextLine();
+	Scanner stdin;
+	StudentList cs213=new StudentList();
 	/**
 	 * find the command
 	 */
-	String[] parts = commandline.split(" ");
-	newstudents = new Student[];
-	fname = parts[1];
-	lname = parts[2];
-	credit = Integer.parseInt(parts[3]);
 	
-	public void addcommand() {
+	 public void run()
+	   {
+	      stdin = new Scanner(System.in);
+	      boolean done = false;
+	      while ( !done )
+	      {
+	         String command = stdin.next();
+	         char ccommand=command.charAt(0)
+	         switch (ccommand)  
+	         {   
+	            case 'I': add('I');
+			      break; 
+	            case 'O': add('O');
+	              break;
+	            case 'N': add('N');
+	              break;
+	            case 'R': remove();
+	              break;
+	            case 'P': print();
+	              break;
+	            case 'Q': 
+	            System.out.println("Program terminated");
+	            done = true;
+	            break;
+	            default: //deal with bad command here 
+	            System.out.println("Command"+"'"+command+"'"+"not supported!");		
+	         }  
+	      }
+	public void addcommand(char studenttype) {
 	/**
 	 * If the command is Instate student
 	 * check the fund.
 	 */
-	if (parts[0].equals("I")) {
-		if(parts[4].equals("0")) {
-			fund = 0;
-		}
-		else {
-			fund = Integer.parseInt(parts[4]);
-		}
-		add(newstudents);
+	String fname = stdin.next();
+	String lname = stdin.next();
+	int credit = stdin.next();
+	if (credit <= 0) {
+		System.out.println(credit + " is not a vaild credit!");
+		return;
+	}
+	if (studenttype == 'I') {
+		int fund = stdin.next();
+		cs213.add(new Instate(fname,lname,credit,fund));
 		return;
 	}
 	/**
 	 * if the command is outstate student
 	 * check the tristate
 	 */
-	if (parts[0].equals("O")) {
-		if(parts[4].equals("T")) {
-			tristate == true;
-		}
-		else
-			tristate == false;
-		add(newstudents);
+	if (studenttype == 'O') {
+		boolean tristate = stdin.next();
+		cs213.add(new Outstate(fname,lname,credit,tristate));
 		return;
 	}
 	/**
@@ -54,17 +75,13 @@ public class TuitionManager {
 	 * check the exchange
 	 * check the credit is smaller than 9
 	 */
-	if (parts[0].equals("N")) {
-		if(parts[4].equals("T")) {
-			exchange == true;
+	if (studenttype == 'N') {
+		if (credit < 9) {
+			System.out.println(credit+" is not a vaild credit!");
+			return;
 		}
-		else
-			exchange == false;
-		int creditinernational = Integer.parseInt(parts[3]);
-		if(creditinternational < 9) {
-			return null;
-		}
-		add(newstudents);
+		boolean exchange = stdin.next();
+		cs213.add(new International(fname,lname,credit,tristate));
 		return;
 	}
 	}
@@ -73,23 +90,24 @@ public class TuitionManager {
 	/**
 	 * if the command is remove the student.
 	 */
-	if (parts[0].equals("R")) {
-		if (remove(newstudents) == false) {
-			return null;
+	String fname = stdin.next();
+	String lname = stdin.next();
+	boolean successfullyRemoved = cs213.remove(new Student(fname,lname));
+	if (!succeddfullyRemoved) {
+		System.out.println(outMember.toString() + " is not a student!");
 		}
-	}
+		else {
+		System.out.println(outMember.toString() + " has been removed!");
+		}
+		return;
 	}
 	
 	public void print() {
 		/**
 		 * the command is to print the whold chart out.
 		 */
-		if (parts[0].equals("P")) {
-			System.out.print(super);
+		if (cs213)
+			
 		}
 	}
-	public void terminate() {
-		if (parts[0].equals("Q"))
-		System.out.print("Program terminated");
-	}
-}
+	   }

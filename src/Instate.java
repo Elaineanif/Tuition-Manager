@@ -8,6 +8,7 @@ public class Instate extends Student {
     
     public Instates(String fname, String lname, int credit, int funds) {
     	super(fname, lname, credit);
+    	this.funds = funds;
     }
     /**
      * Tuition calculator for instate student
@@ -44,7 +45,7 @@ public class Instate extends Student {
     	return tuition;
     }
     public String toString() {
-    	return super.toString() + "tuition due:$" + tuitionDue();
+    	return super.toString()+" the number of funds are: "+funds;
     }
     public static void main(String[] args) {
     	
